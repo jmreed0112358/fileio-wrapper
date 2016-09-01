@@ -8,7 +8,6 @@ FileIO.prototype.readdirSync = function (path) {
   try {
     return fs.readdirSync(path);
   } catch (error) {
-    console.log('Caught error: ', error);
     throw error;
   }
 };
@@ -29,7 +28,6 @@ FileIO.prototype.readDataSync = function (fileName) {
     fs.closeSync(fd);
     return retval;
   } catch (error) {
-    console.log('Caught error: ', error);
     throw error;
   }
 };
@@ -49,8 +47,8 @@ FileIO.prototype.writeDataSync = function (fileName, data) {
   try {
     fd = fs.openSync(fileName, 'w');
     fs.writeFileSync(fd, input, { encoding: 'utf8', mode: 0x600 });
+    return true;
   } catch (error) {
-    console.log('Caught error: ', error);
     throw error;
   }
 };
@@ -59,7 +57,6 @@ FileIO.prototype.unlinkFileSync = function (fileName) {
   try {
     fs.unlinkSync(fileName);
   } catch (error) {
-    console.log('Caught error: ', error);
     throw error;
   }
 };
