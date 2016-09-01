@@ -16,7 +16,7 @@ const NONEXISTANT_FILE = 'foo.txt';
 describe('FileIO', function () {
   var fileIO = new FileIO();
 
-  describe('readdirSync', function () {
+ xdescribe('readdirSync', function () {
     /*
      *    List all the files in READABLE_WRITABLE_DIRECTORY directory.
      */
@@ -56,27 +56,47 @@ describe('FileIO', function () {
      *    Reads READABLE_WRITABLE_DIRECTORY/READABLE_WRITABLE_FILE,
      * and validates the contents.
      */
-    it('should return file data for valid file');
+    it('should return file data for valid file', function () {
+      var expected = 'Hello World.\n';
+      var actual = fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + READABLE_WRITABLE_FILE);
+      expect(actual).toEqual(expected);
+    });
+
+    it('should return file data for readable in a non-readable directory', function () {
+      var expected = 'Hello World.\n';
+      var actual = fileIO.readDataSync(NOT_READABLE_DIRECTORY + READABLE_WRITABLE_FILE);
+      expect(actual).toEqual(expected);
+    });
 
     /*
      *    Tries to read READABLE_WRITABLE_DIRECTORY/NONEXISTANT_FILE.
      */
-    it('should throw error if the given file doesn\'t exist');
+    xit('should throw error if the given file doesn\'t exist', function () {
+      expect(function () {
+        fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE + '\''));
+    });
 
     /*
      *    Tries to read NONEXISTANT_DIRECTORY/NONEXISTANT_FILE.
      */
-    it('should throw error if the given directory doesn\'t exist');
-
-    /*
-     *    Tries to read NOT_READABLE_DIRECTORY/READABLE_WRITABLE_FILE.
-     */
-    it('should throw error if the given directory isn\'t readable');
+    xit('should throw error if the given directory doesn\'t exist', function () {
+      expect(function () {
+        fileIO.readDataSync(NONEXISTANT_DIRECTORY + NONEXISTANT_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, stat \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\''));
+    });
 
     /*
      *    Tries to read READABLE_WRITABLE_DIRECTORY/NOT_READABLE_FILE.
      */
-    it('should throw error if the given file isn\'t readable');
+    it('should throw error if the given file isn\'t readable', function () {
+      expect(function () {
+        fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + NOT_READABLE_FILE);
+      }).toThrow(
+        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_READABLE_FILE + '\''));
+    });
   });
 
   describe('writeDataSync', function() {
