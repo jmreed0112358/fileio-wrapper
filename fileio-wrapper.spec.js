@@ -10,13 +10,13 @@ const NONEXISTANT_DIRECTORY = 'foo/';
 const READABLE_WRITABLE_FILE = 'readable-writable.txt';
 const NOT_READABLE_FILE = 'not-readable.txt';
 const NOT_WRITABLE_FILE = 'not-writable.txt';
-const TEST_FILE = 'test-file';
+const TEST_FILE = 'test-file.txt';
 const NONEXISTANT_FILE = 'foo.txt';
 
 describe('FileIO', function () {
   var fileIO = new FileIO();
 
- xdescribe('readdirSync', function () {
+  describe('readdirSync', function () {
     /*
      *    List all the files in READABLE_WRITABLE_DIRECTORY directory.
      */
@@ -71,7 +71,7 @@ describe('FileIO', function () {
     /*
      *    Tries to read READABLE_WRITABLE_DIRECTORY/NONEXISTANT_FILE.
      */
-    xit('should throw error if the given file doesn\'t exist', function () {
+    it('should throw error if the given file doesn\'t exist', function () {
       expect(function () {
         fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE);
       }).toThrow(
@@ -81,7 +81,7 @@ describe('FileIO', function () {
     /*
      *    Tries to read NONEXISTANT_DIRECTORY/NONEXISTANT_FILE.
      */
-    xit('should throw error if the given directory doesn\'t exist', function () {
+    it('should throw error if the given directory doesn\'t exist', function () {
       expect(function () {
         fileIO.readDataSync(NONEXISTANT_DIRECTORY + NONEXISTANT_FILE);
       }).toThrow(
@@ -106,23 +106,51 @@ describe('FileIO', function () {
      *    Writes data to READABLE_WRITABLE_DIRECTORY/TEST_FILE,
      * verifies contents, then removes (unlink) the file.
      */
-    it('should return true after writing data to the file');
+    it('should return true after writing data to the file', function () {
+      var data = 'Foo bar\n',
+        actual = fileIO.writeDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE, data),
+        dataCheck = '';
+      expect(actual).toEqual(true);
+
+      dataCheck = fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      expect(dataCheck).toEqual(data);
+      fileIO.unlinkFileSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      expect(function () {
+        fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + TEST_FILE + '\''));
+    });
 
     /*
      *    Tries to write to NONEXISTANT_DIRECTORY/NONEXISTANT_FILE.
      */
-    it('should throw error if the given directory doesn\'t exist.');
+    it('should throw error if the given directory doesn\'t exist.', function () {
+      expect(function () {
+        fileIO.writeDataSync(NONEXISTANT_DIRECTORY + NONEXISTANT_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, open \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\''));
+    });
 
     /*
      *    Tries to write to NOT_WRITABLE_DIRECTORY/TEST_FILE.
      */
-    it('should throw error if the given directory isn\'t writable');
+    it('should throw error if the given directory isn\'t writable', function () {
+      expect(function () {
+        fileIO.writeDataSync(NOT_WRITABLE_DIRECTORY + TEST_FILE);
+      }).toThrow(
+        new Error('EACCES: permission denied, open \'' + NOT_WRITABLE_DIRECTORY + TEST_FILE + '\''));
+    });
 
     /*
      *    Tries to write to READABLE_WRITABLE_DIRECTORY/NOT_WRITABLE_FILE.
      */
 
-    it('should throw error if the given file isn\'t writable');
+    it('should throw error if the given file isn\'t writable', function () {
+      expect(function () {
+        fileIO.writeDataSync(READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE);
+      }).toThrow(
+        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE + '\''));
+    });
   });
 
   //describe('unlinkFileSync');
