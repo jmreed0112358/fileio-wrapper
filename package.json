@@ -1,0 +1,22 @@
+{
+  "name": "fileio-wrapper",
+  "version": "0.0.1",
+  "description": "This is a basic wrapper for the fs module.",
+  "main": "fileio-wrapper.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jasmine-node fileio-wrapper.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmreed0112358/fileio-wrapper.git"
+  },
+  "author": "Jeremy M. Reed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jmreed0112358/fileio-wrapper/issues"
+  },
+  "homepage": "https://github.com/jmreed0112358/fileio-wrapper#readme"
+}
