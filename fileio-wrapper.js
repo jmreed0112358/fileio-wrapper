@@ -55,4 +55,13 @@ FileIO.prototype.writeDataSync = function (fileName, data) {
   }
 };
 
+FileIO.prototype.unlinkFileSync = function (fileName) {
+  try {
+    fs.unlinkSync(fileName);
+  } catch (error) {
+    console.log('Caught error: ', error);
+    throw error;
+  }
+};
+
 module.exports = FileIO;
