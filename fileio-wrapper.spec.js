@@ -37,7 +37,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readdirSync(NONEXISTANT_DIRECTORY);
       }).toThrow(
-        new Error('ENOENT: no such file or directory, scandir \'' + NONEXISTANT_DIRECTORY + '\''));
+        new Error('ENOENT: no such file or directory, scandir \'' + NONEXISTANT_DIRECTORY + '\'')
+      );
     });
 
     /*
@@ -47,7 +48,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readdirSync(NOT_READABLE_DIRECTORY);
       }).toThrow(
-        new Error('EACCES: permission denied, scandir \'' + NOT_READABLE_DIRECTORY + '\''));
+        new Error('EACCES: permission denied, scandir \'' + NOT_READABLE_DIRECTORY + '\'')
+      );
     });
   });
 
@@ -75,7 +77,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE);
       }).toThrow(
-        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE + '\''));
+        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE + '\'')
+      );
     });
 
     /*
@@ -85,7 +88,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readDataSync(NONEXISTANT_DIRECTORY + NONEXISTANT_FILE);
       }).toThrow(
-        new Error('ENOENT: no such file or directory, stat \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\''));
+        new Error('ENOENT: no such file or directory, stat \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\'')
+      );
     });
 
     /*
@@ -95,7 +99,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + NOT_READABLE_FILE);
       }).toThrow(
-        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_READABLE_FILE + '\''));
+        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_READABLE_FILE + '\'')
+      );
     });
   });
 
@@ -118,7 +123,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
       }).toThrow(
-        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + TEST_FILE + '\''));
+        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + TEST_FILE + '\'')
+      );
     });
 
     /*
@@ -128,7 +134,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.writeDataSync(NONEXISTANT_DIRECTORY + NONEXISTANT_FILE);
       }).toThrow(
-        new Error('ENOENT: no such file or directory, open \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\''));
+        new Error('ENOENT: no such file or directory, open \'' + NONEXISTANT_DIRECTORY + NONEXISTANT_FILE + '\'')
+      );
     });
 
     /*
@@ -138,7 +145,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.writeDataSync(NOT_WRITABLE_DIRECTORY + TEST_FILE);
       }).toThrow(
-        new Error('EACCES: permission denied, open \'' + NOT_WRITABLE_DIRECTORY + TEST_FILE + '\''));
+        new Error('EACCES: permission denied, open \'' + NOT_WRITABLE_DIRECTORY + TEST_FILE + '\'')
+      );
     });
 
     /*
@@ -148,7 +156,8 @@ describe('FileIO', function () {
       expect(function () {
         fileIO.writeDataSync(READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE);
       }).toThrow(
-        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE + '\''));
+        new Error('EACCES: permission denied, open \'' + READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE + '\'')
+      );
     });
   });
 
