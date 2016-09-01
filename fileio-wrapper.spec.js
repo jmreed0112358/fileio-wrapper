@@ -144,7 +144,6 @@ describe('FileIO', function () {
     /*
      *    Tries to write to READABLE_WRITABLE_DIRECTORY/NOT_WRITABLE_FILE.
      */
-
     it('should throw error if the given file isn\'t writable', function () {
       expect(function () {
         fileIO.writeDataSync(READABLE_WRITABLE_DIRECTORY + NOT_WRITABLE_FILE);
@@ -153,5 +152,37 @@ describe('FileIO', function () {
     });
   });
 
-  //describe('unlinkFileSync');
+  describe('unlinkFileSync', function() {
+
+    /*
+     *    Creates READABLE_WRITABLE_DIRECTORY/TEST_FILE, then unlinks it.
+     *  Tries to read the file as a sanity check.
+     */
+    it('should delete a file', function () {
+      var data = 'Foo bar\n',
+        actual = fileIO.writeDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE, data),
+        dataCheck = '';
+      expect(actual).toEqual(true);
+
+      dataCheck = fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      expect(dataCheck).toEqual(data);
+      fileIO.unlinkFileSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      expect(function () {
+        fileIO.readDataSync(READABLE_WRITABLE_DIRECTORY + TEST_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, stat \'' + READABLE_WRITABLE_DIRECTORY + TEST_FILE + '\'')
+      );
+    });
+
+    /*
+     *    Tries to unlink READABLE_WRITABLE_DIRECTORY/NONEXISTANT_FILE.
+     */
+    it('should throw error if the given file does not exist', function () {
+      expect(function () {
+        fileIO.unlinkFileSync(READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE);
+      }).toThrow(
+        new Error('ENOENT: no such file or directory, unlink \'' + READABLE_WRITABLE_DIRECTORY + NONEXISTANT_FILE + '\'')
+      );
+    });
+  });
 });
